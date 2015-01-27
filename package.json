@@ -1,0 +1,26 @@
+{
+  "name": "jsoid",
+  "version": "1.0.0",
+  "description": "Unique Object IDs for NodeJS (io.js at this time, really",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loveencounterflow/jsoid.git"
+  },
+  "keywords": [
+    "oid",
+    "id",
+    "iojs",
+    "object",
+    "id"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/loveencounterflow/jsoid/issues"
+  },
+  "homepage": "https://github.com/loveencounterflow/jsoid"
+}
