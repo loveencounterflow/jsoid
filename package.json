@@ -1,6 +1,6 @@
 {
   "name": "jsoid",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Unique Object IDs for NodeJS (io.js at this time, really",
   "main": "index.js",
   "scripts": {
