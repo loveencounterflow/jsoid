@@ -123,7 +123,7 @@ The source is so short it fits into the readme:
     return 'true'       if value is true
     return 'false'      if value is false
     return 'null'       if value is null
-    return 'undefined'  if value is null
+    return 'undefined'  if value is undefined
     if is_number value
       return 'nan' if isNaN value
       return ( if value > 0 then "+infinity" else "-infinity" ) unless isFinite value

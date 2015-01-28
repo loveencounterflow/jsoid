@@ -56,7 +56,7 @@
       if (value === null) {
         return 'null';
       }
-      if (value === null) {
+      if (value === void 0) {
         return 'undefined';
       }
       if (is_number(value)) {
@@ -137,6 +137,9 @@
       throw new Error("test case #17 failed");
     }
     if ((jsoid(u = Symbol('foo'))) !== 'o#3') {
+      throw new Error("test case #18 failed");
+    }
+    if ((jsoid(void 0)) !== 'undefined') {
       throw new Error("test case #18 failed");
     }
   };

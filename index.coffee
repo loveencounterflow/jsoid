@@ -41,7 +41,7 @@ id_from_text = ( text, length, hash = 'sha1' ) ->
     return 'true'       if value is true
     return 'false'      if value is false
     return 'null'       if value is null
-    return 'undefined'  if value is null
+    return 'undefined'  if value is undefined
     #.......................................................................................................
     if is_number value
       return 'nan' if isNaN value
@@ -81,6 +81,7 @@ test = ->
   throw new Error "test case #16 failed" unless ( jsoid 42               ) is 'n#42'
   throw new Error "test case #17 failed" unless ( jsoid s                ) is 'o#2'
   throw new Error "test case #18 failed" unless ( jsoid u = Symbol 'foo' ) is 'o#3'
+  throw new Error "test case #18 failed" unless ( jsoid undefined        ) is 'undefined'
 
 
 ############################################################################################################
