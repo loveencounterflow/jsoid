@@ -81,8 +81,8 @@ t#8e95a23efc4e
 
 Basically, that's a running ID for objects, and some kind of stringification for
 primitive values. Ah yes, and the IDs are all (short) strings, because with the
-more traditional numerical IDs, it's obviously logically impossible to represent all
-of JS numbers and all the other possible values uniquely; only strings can do that, and
+more traditional numerical IDs, it's logically inconceivable to represent *both* all
+JS numbers *and* all the other possible values uniquely; only strings can do that, and
 only strings can act as object keys, so there's an added value there.
 
 As it stands, each call to `require( 'jsoid' )` will return a new
