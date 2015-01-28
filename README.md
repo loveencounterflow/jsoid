@@ -92,7 +92,7 @@ since a simple counter is used in the case of objects, you must make sure to use
 one and the same `jsoid` function for all your IDs. I'm willing to look into ways to fix that,
 but that may not be worthwhile: when you can transfer an object from one point of
 your application to another point, you can also transfer the `jsoid` function. All
-other solutions are mosre cumbersome.
+other solutions are more cumbersome.
 
 ## Source
 
