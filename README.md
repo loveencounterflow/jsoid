@@ -94,6 +94,15 @@ but that may not be worthwhile: when you can transfer an object from one point o
 your application to another point, you can also transfer the `jsoid` function. All
 other solutions are more cumbersome.
 
+One more point: i arbitrarily chose 12 digits of an `sha-1` hash to represent all strings
+because that method should be available everywhere, be good enough for the purpose,
+and *i think* the number of digits should make collisions reasonably unlikely. And
+i don't want a 1MB text to inadvertently get used as an object key in my code.
+If you're worried you could ever run into a collsion like `jsoid( text1 ) === jsoid( text2 )`
+with `text1 !== text2`, [read up on the math](http://stackoverflow.com/a/22029380/256361),
+[do the figures](http://reference.wolfram.com/language/ref/Pochhammer.html), and
+[complain / praise](https://github.com/loveencounterflow/jsoid/issues).
+
 ## Source
 
 The source is so short it fits into the readme:
