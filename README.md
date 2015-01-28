@@ -51,7 +51,7 @@ about the type of the values when using `jsoid`.
 Install as `npm install --save jsoid`.
 
 **Be aware that this is not a mature module; i just slapped something together that seems
-to work with a tiny test (run `node --harmony jsoid.js` or, better still, `iojs jsoid.js`;
+to work with a tiny test (run `node --harmony jsoid/index.js` or, better still, `iojs jsoid/index.js`;
 if you get no output, the tests have passed).**
 
 From with your module, use
