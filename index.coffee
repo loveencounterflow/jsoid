@@ -1,5 +1,13 @@
 
+
+
+
+############################################################################################################
 crypto                    = require 'crypto'
+util                      = require 'util'
+is_number                 = util.isNumber
+is_string                 = util.isString
+help                      = debug = console.log
 
 #-----------------------------------------------------------------------------------------------------------
 id_from_text = ( text, length, hash = 'sha1' ) ->
@@ -11,87 +19,72 @@ id_from_text = ( text, length, hash = 'sha1' ) ->
   R = ( ( crypto.createHash hash ).update text, 'utf-8' ).digest 'hex'
   return if length? then R[ 0 ... length ] else R
 
-text = ( require './permuted-index' )[ 'text' ]
-# n = 1000
-# urge "text length: #{text.length}"
-# for hash in crypto.getHashes()
-#   t0 = + new Date()
-#   for idx in [ 0 .. n ]
-#     try
-#       id = @id_from_text text, 10, hash
-#     catch error
-#       warn error[ 'message' ]
-#       break
-#   t1 = + new Date()
-#   dt = t1 - t0
-#   debug '©BkVs0', hash, dt
+# #-----------------------------------------------------------------------------------------------------------
+# ### Miller Device ###
+# type_of = ( x ) -> Object::toString.call x
 
 #-----------------------------------------------------------------------------------------------------------
-weak_maps_and_object_ids = ->
-  last_oid  = 0
+@new_jsoid = new_jsoid = ( settings ) ->
+  throw new Error "settings not yet supported" if settings?
+  last_oid  = -1
   oid_map   = new WeakMap()
-  ID        = {}
+  R         = {}
 
   #---------------------------------------------------------------------------------------------------------
-  ID._set = ( value, oid = null ) ->
-    oid = ( last_oid += +1 ) unless oid?
-    R   = "o##{oid}"
+  set = ( value ) ->
+    R = "o##{last_oid += +1}"
     oid_map.set value, R
     return R
 
   #---------------------------------------------------------------------------------------------------------
-  ID.get = ( value ) ->
+  R = ( value ) ->
     return 'true'       if value is true
     return 'false'      if value is false
     return 'null'       if value is null
     return 'undefined'  if value is null
-    switch type = CND.type_of value
-      when 'jsnotanumber' then return 'nan'
-      when 'number'       then return "n##{value}"
-      when 'text'         then return "t##{id_from_text value, 12}"
-      when 'jsinfinity'   then return ( if value > 0 then "+infinity" else "-infinity" )
+    #.......................................................................................................
+    if is_number value
+      return 'nan' if isNaN value
+      return ( if value > 0 then "+infinity" else "-infinity" ) unless isFinite value
+      return "n##{value}"
+    #.......................................................................................................
+    return "t##{id_from_text value, 12}" if is_string value
+    #.......................................................................................................
     return R if ( R = oid_map.get value )?
-    return @_set value
+    return set value
 
-  debug '©cDOVp', CND.type_of 0 / 0
+  #---------------------------------------------------------------------------------------------------------
+  return R
+
+#-----------------------------------------------------------------------------------------------------------
+test = ->
+  jsoid = new_jsoid()
   #---------------------------------------------------------------------------------------------------------
   d = {}
   e = {}
   s = Symbol 'foo'
-  help ID._set d
-  help ID.get d
-  help '+++', ID.get e
-  help '+++', ID.get 'helo'
-  help '+++', ID.get text
-  help '+++', ID.get text.replace /.$/, '?'
-  help '>>>', ID.get 42
-  help '>>>', ID.get 42
-  help '>>>', ID.get 1 / 0
-  help '>>>', ID.get 0 / 0
-  help '±±±', ID.get s
-  help '±±±', ID.get Infinity
-  help '±±±', ID.get -Infinity
-  warn "running GC"
-  gc()
-  help '+++', ID.get e
-  help '>>>', ID.get 42
-  help '>>>', ID.get 42
-  help '±±±', ID.get s
-  help '±±±', ID.get u = Symbol 'foo'
-
-  # t = Symbol.for 'foo'
-  # console.log t
-  # console.log t is s
-  # console.log t is u
+  throw new Error "test case #1 failed"  unless ( jsoid d                ) is 'o#0'
+  throw new Error "test case #2 failed"  unless ( jsoid e                ) is 'o#1'
+  throw new Error "test case #3 failed"  unless ( jsoid 'helo'           ) is 't#c6efaf27673d'
+  throw new Error "test case #4 failed"  unless ( jsoid 'helo!'          ) is 't#8e95a23efc4e'
+  throw new Error "test case #5 failed"  unless ( jsoid 42               ) is 'n#42'
+  throw new Error "test case #6 failed"  unless ( jsoid 1e3              ) is 'n#1000'
+  throw new Error "test case #7 failed"  unless ( jsoid 1e12             ) is 'n#1000000000000'
+  throw new Error "test case #8 failed"  unless ( jsoid 42               ) is 'n#42'
+  throw new Error "test case #9 failed"  unless ( jsoid 1 / 0            ) is '+infinity'
+  throw new Error "test case #10 failed" unless ( jsoid 0 / 0            ) is 'nan'
+  throw new Error "test case #11 failed" unless ( jsoid s                ) is 'o#2'
+  throw new Error "test case #12 failed" unless ( jsoid Infinity         ) is '+infinity'
+  throw new Error "test case #13 failed" unless ( jsoid -Infinity        ) is '-infinity'
+  throw new Error "test case #14 failed" unless ( jsoid e                ) is 'o#1'
+  throw new Error "test case #15 failed" unless ( jsoid 42               ) is 'n#42'
+  throw new Error "test case #16 failed" unless ( jsoid 42               ) is 'n#42'
+  throw new Error "test case #17 failed" unless ( jsoid s                ) is 'o#2'
+  throw new Error "test case #18 failed" unless ( jsoid u = Symbol 'foo' ) is 'o#3'
 
 
-  # urge CND.type_of true
-  # urge CND.type_of null
-  # urge CND.type_of undefined
-  # urge CND.type_of 42
-  # urge CND.type_of 'String'
-  # urge CND.type_of Symbol 'foo'
+############################################################################################################
+unless module.parent?
+  test()
 
 
-
-weak_maps_and_object_ids()
