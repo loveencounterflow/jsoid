@@ -33,23 +33,26 @@ two things that JavaScript lacks and for which workarounds are sometimes necessa
 	very well (and is prone to leak memory).
 
 All this has quite recently changed; for NodeJS people, the most obvious change is
-the release of [io.js](https://iojs.org/) in January 2015, which out-of-the box provides
+the release of [io.js](https://iojs.org/) in January 2015, which out-of-the-box provides
 ES6 Symbols, Maps, Sets, WeakMaps, generators / `yield`, you name it.
 
-> For a quick-and-easy instruction how to install the latest `iojs` binaries on your
+> For a quick-and-easy instruction how to install the latest `iojs` binary on your
 > machine, have a look at my [how-to](https://github.com/loveencounterflow/how-to).
 
 It turns out that Symbols, Maps, Sets, WeakMaps have some amount of overlap in their
-features that make all of the above tasks a lot easier, including a tiny, pure-JS
-implementation of OIDs, which is all that `jsoid` is there for.
+features that make all of the above tasks a lot easier. `jsoid` uses ES6 WeakMaps
+to implement efficient, memory-safe, bijective, non-obstrusive Object IDs that can readily
+be used as string values for your favorite object collection. Because 'primitive'
+values (numbers, strings, true, NaN, ...) are supported, you should never have to care
+about the type of the values when using `jsoid`.
 
 ## Usage
 
 Install as `npm install --save jsoid`.
 
-Be aware that this is not a mature module; i just slapped something together that seems
+**Be aware that this is not a mature module; i just slapped something together that seems
 to work with a tiny test (run `node --harmony jsoid.js` or, better still, `iojs jsoid.js`;
-if you get no output, the tests have passed).
+if you get no output, the tests have passed).**
 
 From with your module, use
 
