@@ -20,17 +20,17 @@ two things that JavaScript lacks and for which workarounds are sometimes necessa
 * Classical JS has no concept of a 'unique Object ID' (OID).
 * Classical JS has no true Maps; you only get objects which accept strings as keys;
 * Classical JS has no Weak Maps, meaning when you have to cache objects, you must
-	always nake sure to appropriately clear the cache when objects get out of scope.
+	always make sure to appropriately clear the cache when objects get out of scope.
 * Because classical JS has only strings as keys, there are quite a few opportunities for
 	key collsions in case you're not careful (i.e. `x[ '123' ]` shadows `x[ 123 ]`,
 	`x[ 'NaN' ] shadows `x[ 0 / 0 ]` and so on).
 * Because classical JS has only strings as keys, it is somewhat hard to tack private attributes
-	such as `x.__FOOBAR_ID` to objects; you still should make those keys non-iterable and so on
-	in the general case;
-* Because classical JS has no OIDs, it is hard to efficiently look in a given cache or somesuch
+	such as `x.__FOOBAR_ID` to objects; in the general case, you should make those keys
+	non-iterable in the general case (which has only been possible at all for a few years).
+* Because classical JS has no OIDs, it is hard to efficiently look into a given cache or somesuch
 	collection for the existence of a given object; an easy way to achieve that is to put
 	everything in an array and then query for `cache.indexOf( x )`, but that isn't bound to scale
-	very well.
+	very well (and is prone to leak memory).
 
 All this has quite recently changed; for NodeJS people, the most obvious change is
 the release of [io.js](https://iojs.org/) in January 2015, which out-of-the box provides
