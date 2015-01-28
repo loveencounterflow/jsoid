@@ -54,7 +54,7 @@ Install as `npm install --save jsoid`.
 to work with a tiny test (run `node --harmony jsoid/index.js` or, better still, `iojs jsoid/index.js`;
 if you get no output, the tests have passed).**
 
-From with your module, use
+From within your module, use
 
 ```js
 var jsoid = require( 'jsoid' )();
@@ -85,7 +85,7 @@ more traditional numerical IDs, it's logically inconceivable to represent *both*
 JS numbers *and* all the other possible values uniquely; only strings can do that, and
 only strings can act as object keys, so there's an added value there.
 
-As it stands, each call to `require( 'jsoid' )` will return a new
+As it stands, each call to `require( 'jsoid' )()` will return a new
 instance of a OID-generating function; that function will generated unqiue IDs that
 are consistent with the IDs of all other instances of the `jsoid` function, but
 since a simple counter is used in the case of objects, you must make sure to use only
