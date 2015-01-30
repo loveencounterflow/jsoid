@@ -60,6 +60,12 @@
         return 'undefined';
       }
       if (is_number(value)) {
+
+        /* `isNan is broken as per
+        https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN;
+        however, we already know that `value` tests `true` for `util.isNumber`, so using `isNan` here should
+        be alright.
+         */
         if (isNaN(value)) {
           return 'nan';
         }

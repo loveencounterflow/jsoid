@@ -125,6 +125,10 @@ The source is so short it fits into the readme:
     return 'null'       if value is null
     return 'undefined'  if value is undefined
     if is_number value
+      ### `isNan is broken as per
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN;
+      however, we already know that `value` tests `true` for `util.isNumber`, so using `isNan` here should
+      be alright. ###
       return 'nan' if isNaN value
       return ( if value > 0 then "+infinity" else "-infinity" ) unless isFinite value
       return "n##{value}"
