@@ -64,7 +64,7 @@ output = render ->
 console.log output
 ```
 
-Had my code really being that simple from the outset, i would've noticed right away that something
+Had my code really been that simple from the outset, i would've noticed right away that something
 in `teacup` didn't work as i would have it expected to, for the ouput of the above is
 
 ```html
