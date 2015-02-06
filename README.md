@@ -74,7 +74,7 @@ in `teacup` didn't work as i would have it expected to, for the ouput of the abo
   </ul>
 ```
 
-where the `class` attribute has myteriously vanished. However, my actual code is considerably
+where the `class` attribute has mysteriously vanished in the second `<li>` tag. However, my actual code is considerably
 more complex, and i tore my hairs over trying to pinpoint a fault; in particular,
 the two rendering events happen as two calls to the same function, and the object that represents the
 HTML attributes gets cached in a list in between. I suspected that i had inadvertently cached the wrong
