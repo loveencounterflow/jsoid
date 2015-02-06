@@ -78,11 +78,11 @@ where the `class` attribute has mysteriously vanished in the second `<li>` tag. 
 more complex, and i tore my hairs over trying to pinpoint a fault; in particular,
 the two rendering events happen as two calls to the same function, and the object that represents the
 HTML attributes gets cached in a list in between. I suspected that i had inadvertently cached the wrong
-object, inadvertently swapping the real one for an empty one in the process. Only i couldn't find
+object, swapping the real one for an empty one in the process. Only i couldn't find
 a hint for such a thing, and still wasn't entirely sure i was really dealing with the *same* object
 all of the time. Some bugs are caused by *very* stupid code faults, after all!
 
-JsOid to the rescue! To ascertain the identity of the HTML `attributes` values was as simple as:
+OIDs to the rescue! To ascertain the identity of the HTML `attributes` values was as simple as:
 
 ```coffee
 get_id = ( require 'jsoid' ).new_jsoid()
