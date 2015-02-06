@@ -27,7 +27,7 @@ two things that JavaScript lacks and for which workarounds are sometimes necessa
 	`x[ 'NaN' ] shadows `x[ 0 / 0 ]` and so on).
 * Because classical JS has only strings as keys, it is somewhat hard to tack private attributes
 	such as `x.__FOOBAR_ID` to objects; in the general case, you should make those keys
-	non-iterable in the general case (which has only been possible at all for a few years).
+	non-iterable (which has only been possible at all for a few years).
 * Because classical JS has no OIDs, it is hard to efficiently look into a given cache or somesuch
 	collection for the existence of a given object; an easy way to achieve that is to put
 	everything in an array and then query for `cache.indexOf( x )`, but that isn't bound to scale
