@@ -2,6 +2,7 @@
 
 - [jsoid](#jsoid)
 	- [Motivation](#motivation)
+	- [A Real-World Use Case](#a-real-world-use-case)
 	- [Usage](#usage)
 	- [Source](#source)
 
@@ -45,6 +46,56 @@ to implement efficient, memory-safe, bijective, non-obstrusive Object IDs that c
 be used as string values for your favorite object collection. Because 'primitive'
 values (numbers, strings, true, NaN, ...) are supported, you should never have to care
 about the type of the values when using `jsoid`.
+
+## A Real-World Use Case
+
+Today i stumbled across some very strange behavior of the (otherwise great)
+[teacup library](https://github.com/goodeggs/teacup). I wanted to repeatedly render some data structure
+as HTML; basically, what i did was
+
+```coffee
+{render, ul, li} = require 'teacup'
+d =
+  class:  'foo bar'
+output = render ->
+  ul ->
+    li d, 'Bergamont'
+    li d, 'Chamomile'
+console.log output
+```
+
+Had my code really being that simple from the outset, i would've noticed right away that something
+in `teacup` didn't work as i would have it expected to, for the ouput of the above is
+
+```html
+<ul>
+  <li class="foo bar">Bergamont</li>
+  <li>Chamomile</li>
+  </ul>
+```
+
+where the `class` attribute has myteriously vanished. However, my actual code is considerably
+more complex, and i tore my hairs over trying to pinpoint a fault; in particular,
+the two rendering events happen as two calls to the same function, and the object that represents the
+HTML attributes gets cached in a list in between. I suspected that i had inadvertently cached the wrong
+object, inadvertently swapping the real one for an empty one in the process. Only i couldn't find
+a hint for such a thing, and still wasn't entirely sure i was really dealing with the *same* object
+all of the time. Some bugs are caused by *very* stupid code faults, after all!
+
+JsOid to the rescue! To ascertain the identity of the HTML `attributes` values was as simple as:
+
+```coffee
+get_id = ( require 'jsoid' ).new_jsoid()
+
+f = ( name, attributes ) ->
+  console.log get_id attributes
+  ...
+```
+
+Sure enough, i got the same ID printed out for each call to `f` so i knew it wasn't my fault, as i had
+nowhere in my code used the word `delete` (which is how you'd remove a property in JavaScript). I looked
+up the `teacup` sources on GitHub, and sure enough, *there* was a `delete` statement!
+[Bug opened](https://github.com/goodeggs/teacup/issues/46), case solved!
 
 ## Usage
 
